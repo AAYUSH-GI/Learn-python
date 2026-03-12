@@ -1,41 +1,20 @@
 import { useState } from 'react';
 import { Exercise } from '@/types';
 
-declare global {
-  interface Window {
-    loadPyodide?: (opts?: { indexURL: string }) => Promise<any>;
-    pyodide?: any;
-  }
-}
-
-async function ensurePyodide() {
-  if (!window.loadPyodide) {
-    await new Promise<void>((resolve) => {
-      const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
-      s.onload = () => resolve();
-      document.body.appendChild(s);
-    });
-  }
-  if (!window.pyodide) window.pyodide = await window.loadPyodide?.({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/' });
-  return window.pyodide;
-}
-
 export function ExercisePanel({ exercise }: { exercise: Exercise }) {
   const [code, setCode] = useState(exercise.starterCode);
   const [result, setResult] = useState('');
   const [hintLevel, setHintLevel] = useState(0);
 
-  const check = async () => {
+  const check = () => {
+    const logs: string[] = [];
     try {
-      const pyodide = await ensurePyodide();
-      let output = '';
-      pyodide.setStdout({ batched: (msg: string) => (output = `${output}\n${msg}`.trim()) });
-      await pyodide.runPythonAsync(code);
-      const expected = exercise.tests[0].expected.trim();
-      const normalized = output.trim();
-      const pass = normalized === expected;
-      setResult(pass ? '✅ Pass' : `❌ Fail: expected "${expected}" but got "${normalized || '[no output]'}"`);
+      // eslint-disable-next-line no-new-func
+      const fn = new Function('console', `${code}`);
+      fn({ log: (...args: unknown[]) => logs.push(args.join(' ')) });
+      const normalized = logs.join('\n').trim();
+      const pass = normalized === exercise.tests[0].expected.trim();
+      setResult(pass ? '✅ Pass' : `❌ Fail: Expected "${exercise.tests[0].expected}" but got "${normalized}"`);
     } catch (err) {
       setResult(`❌ Runtime Error: ${String(err)}`);
     }
