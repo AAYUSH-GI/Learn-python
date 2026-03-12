@@ -1,0 +1,18 @@
+import { RoadmapCanvas } from '@/components/Roadmap/RoadmapCanvas';
+import { useAppStore } from '@/context/useAppStore';
+import { lessons } from '@/data/curriculum';
+
+export function RoadmapPage() {
+  const completed = useAppStore((s) => s.completedLessons.length);
+  const progress = Math.round((completed / lessons.length) * 100);
+  return (
+    <div className="space-y-4">
+      <div className="card">
+        <h2 className="text-xl font-bold">Interactive Python Roadmap (360-track)</h2>
+        <p className="text-sm text-slate-400">Progress: {progress}% complete ({completed}/{lessons.length} lessons finished)</p>
+        <div className="mt-2 h-2 rounded bg-slate-800"><div className="h-2 rounded bg-brand-green" style={{ width: `${progress}%` }} /></div>
+      </div>
+      <RoadmapCanvas />
+    </div>
+  );
+}
