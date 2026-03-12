@@ -1,84 +1,214 @@
 import { Lesson } from '@/types';
 
-const stageMeta = [
-  { stageId: 'S1', stageName: 'WELCOME TO PYTHON', difficulty: 1, start: 1, end: 8 },
-  { stageId: 'S2', stageName: 'PRINT & OUTPUT', difficulty: 1, start: 9, end: 17 },
-  { stageId: 'S3', stageName: 'VARIABLES', difficulty: 1, start: 18, end: 28 },
-  { stageId: 'S4', stageName: 'DATA TYPES', difficulty: 1, start: 29, end: 38 },
-  { stageId: 'S5', stageName: 'NUMBERS & MATH', difficulty: 1, start: 39, end: 50 },
-  { stageId: 'S6', stageName: 'STRINGS FUNDAMENTALS', difficulty: 2, start: 51, end: 63 },
-  { stageId: 'S7', stageName: 'STRING METHODS', difficulty: 2, start: 64, end: 76 },
-  { stageId: 'S8', stageName: 'STRING FORMATTING', difficulty: 2, start: 77, end: 84 },
-  { stageId: 'S9', stageName: 'USER INPUT', difficulty: 2, start: 85, end: 90 },
-  { stageId: 'S10', stageName: 'TYPE CONVERSION', difficulty: 2, start: 91, end: 97 },
-  { stageId: 'S11', stageName: 'BOOLEANS & COMPARISONS', difficulty: 2, start: 98, end: 108 },
-  { stageId: 'S12', stageName: 'CONDITIONAL STATEMENTS', difficulty: 2, start: 109, end: 118 },
-  { stageId: 'S13', stageName: 'WHILE LOOPS', difficulty: 2, start: 119, end: 130 },
-  { stageId: 'S14', stageName: 'FOR LOOPS', difficulty: 2, start: 131, end: 144 },
-  { stageId: 'S15', stageName: 'LOOP TECHNIQUES', difficulty: 2, start: 145, end: 152 },
-  { stageId: 'S16', stageName: 'LISTS FUNDAMENTALS', difficulty: 2, start: 153, end: 165 },
-  { stageId: 'S17', stageName: 'LIST METHODS & TECHNIQUES', difficulty: 2, start: 166, end: 178 },
-  { stageId: 'S18', stageName: 'TUPLES', difficulty: 2, start: 179, end: 187 },
-  { stageId: 'S19', stageName: 'SETS', difficulty: 2, start: 188, end: 198 },
-  { stageId: 'S20', stageName: 'DICTIONARIES FUNDAMENTALS', difficulty: 2, start: 199, end: 209 },
-  { stageId: 'S21', stageName: 'DICTIONARY METHODS & ADVANCED', difficulty: 3, start: 210, end: 220 },
-  { stageId: 'S22', stageName: 'FUNCTIONS FUNDAMENTALS', difficulty: 2, start: 221, end: 232 },
-  { stageId: 'S23', stageName: 'FUNCTION PARAMETERS & SCOPE', difficulty: 3, start: 233, end: 242 },
-  { stageId: 'S24', stageName: 'ADVANCED FUNCTIONS', difficulty: 3, start: 243, end: 255 },
-  { stageId: 'S25', stageName: 'LIST COMPREHENSIONS', difficulty: 3, start: 256, end: 264 },
-  { stageId: 'S26', stageName: 'ERROR HANDLING', difficulty: 3, start: 265, end: 276 },
-  { stageId: 'S27', stageName: 'FILE HANDLING', difficulty: 3, start: 277, end: 290 },
-  { stageId: 'S28', stageName: 'MODULES & PACKAGES', difficulty: 3, start: 291, end: 303 },
-  { stageId: 'S29', stageName: 'OOP: CLASSES & OBJECTS', difficulty: 3, start: 304, end: 318 },
-  { stageId: 'S30', stageName: 'OOP: INHERITANCE & POLYMORPHISM', difficulty: 3, start: 319, end: 333 },
-  { stageId: 'S31', stageName: 'INTERMEDIATE CONCEPTS', difficulty: 3, start: 334, end: 346 },
-  { stageId: 'S32', stageName: 'MINI PROJECTS', difficulty: 3, start: 347, end: 358 },
-] as const;
-
-const pad = (n: number) => `L${String(n).padStart(3, '0')}`;
-
-const buildLesson = (n: number, stageId: string, stageName: string, difficulty: number): Lesson => ({
-  id: pad(n),
-  stageId,
-  stage: Number(stageId.slice(1)),
-  order: n,
-  title: `Lesson ${n} — ${stageName}`,
-  duration: `${5 + (n % 6) * 2} min`,
-  difficulty: difficulty === 1 ? 'Easy' : difficulty === 2 ? 'Medium' : 'Hard',
-  objective: `Master lesson ${n} concepts in ${stageName.toLowerCase()}.`,
-  theory: [
-    `Core idea for ${stageName}: understand the syntax, concept, and practical use.`,
-    `Lesson ${n} focuses on applying Python patterns incrementally.`,
-    `Practice by editing code and validating outputs with tests.`
-  ],
-  didYouKnow: `Stage ${stageId} builds directly on prerequisite lessons for progressive learning.`,
-  pitfall: 'Pay attention to indentation, data types, and edge cases when coding.',
-  analogy: 'Treat each lesson like a skill-tree node: unlock, practice, then combine.',
-  examples: [
-    { title: 'Example 1', code: `print("Lesson ${n}")`, explanation: 'Basic output demo.' },
-    { title: 'Example 2', code: `value = ${n}\nprint(value)`, explanation: 'Variable usage demo.' },
-    { title: 'Example 3', code: `for i in range(2):\n    print(i)`, explanation: 'Iteration demo.' }
-  ],
-  exercises: [
-    { id: `${pad(n)}-ex1`, prompt: 'Write code that prints the lesson id.', starterCode: '# TODO\n', solution: `print("${pad(n)}")`, hint: ['Use print().', 'Output should include lesson id.', 'Match exact text.'], tests: [{ input: '', expected: pad(n), description: 'Lesson id output check' }] },
-    { id: `${pad(n)}-ex2`, prompt: 'Create a variable and print it.', starterCode: '# TODO\n', solution: 'x = 1\nprint(x)', hint: ['Assign x.', 'Print x.', 'Keep output simple.'], tests: [{ input: '', expected: '1', description: 'Variable output check' }] },
-    { id: `${pad(n)}-ex3`, prompt: 'Print two lines: A then B.', starterCode: '# TODO\n', solution: 'print("A")\nprint("B")', hint: ['Use two print calls.', 'A first.', 'B second.'], tests: [{ input: '', expected: 'A\nB', description: 'Two-line output check' }] }
-  ],
-  quiz: [
-    { id: `${pad(n)}-q1`, question: 'Which keyword starts a loop in Python?', choices: ['loop', 'for', 'repeat', 'iterate'], answer: 1, explanation: 'for starts iterative loops.' },
-    { id: `${pad(n)}-q2`, question: 'Python blocks are defined by?', choices: ['Braces', 'Semicolons', 'Indentation', 'Commas'], answer: 2, explanation: 'Indentation defines blocks.' },
-    { id: `${pad(n)}-q3`, question: 'Which function prints output?', choices: ['echo()', 'print()', 'show()', 'write()'], answer: 1, explanation: 'print() writes console output.' },
-    { id: `${pad(n)}-q4`, question: 'Which type stores text?', choices: ['int', 'bool', 'str', 'float'], answer: 2, explanation: 'str represents text.' },
-    { id: `${pad(n)}-q5`, question: 'Best way to improve?', choices: ['Skip practice', 'Memorize only', 'Practice coding', 'Ignore errors'], answer: 2, explanation: 'Practice builds fluency.' }
-  ],
-  xp: 50 + (n % 5) * 10,
-  prerequisites: n === 1 ? [] : [pad(n - 1)]
-});
-
-export const lessons: Lesson[] = stageMeta.flatMap((s) => {
-  const out: Lesson[] = [];
-  for (let i = s.start; i <= s.end; i += 1) out.push(buildLesson(i, s.stageId, s.stageName, s.difficulty));
-  return out;
-});
+export const lessons: Lesson[] = [
+  {
+    id: 'hello-python',
+    stage: 1,
+    title: 'Lesson 1 — Hello, Python!',
+    duration: '30 min',
+    difficulty: 'Easy',
+    objective: 'Learn variables, print(), comments, and basic data types.',
+    theory: [
+      'Python is beginner-friendly: readable syntax, fast feedback, and powerful libraries.',
+      'Variables store values. Use meaningful names like user_name, score, or total_price.',
+      'Use print() to display output and # comments to explain code for future you.'
+    ],
+    didYouKnow: 'Python was named after Monty Python, not the snake.',
+    pitfall: 'Variable names are case-sensitive: age and Age are different.',
+    analogy: 'Think of variables as labeled boxes where each box holds one value.',
+    examples: [
+      {
+        title: 'Printing text',
+        code: "print('Hello, Python learner!')",
+        explanation: 'print() writes text to the console.'
+      },
+      {
+        title: 'Variables + types',
+        code: "name = 'Ava'\nage = 16\nheight = 1.62\nis_student = True\nprint(name, age, height, is_student)",
+        explanation: 'Strings, integers, floats, and booleans are basic data types.'
+      },
+      {
+        title: 'Comments + f-strings',
+        code: "# This line introduces the user\nname = 'Kai'\nprint(f'Welcome, {name}!')",
+        explanation: 'Use f-strings to combine text and variables cleanly.'
+      }
+    ],
+    exercises: [
+      {
+        id: 'ex1',
+        prompt: 'Create a variable city with your city name and print: I live in <city>.',
+        starterCode: "# TODO: create city variable and print sentence\n",
+        solution: "city = 'Nairobi'\nprint(f'I live in {city}.')",
+        hint: ['Create a string variable.', 'Use f-string syntax.', 'Match spacing and punctuation exactly.'],
+        tests: [{ input: '', expected: 'I live in Nairobi.', description: 'Output format check' }]
+      },
+      {
+        id: 'ex2',
+        prompt: 'Store 5 and 7 in variables and print their sum.',
+        starterCode: "# TODO: define two numbers and print sum\n",
+        solution: 'a = 5\nb = 7\nprint(a + b)',
+        hint: ['Use integer variables.', 'Add with +.', 'Print the final value.'],
+        tests: [{ input: '', expected: '12', description: 'Sum should be 12' }]
+      },
+      {
+        id: 'ex3',
+        prompt: 'Create a boolean variable passed set to True and print it.',
+        starterCode: '# TODO\n',
+        solution: 'passed = True\nprint(passed)',
+        hint: ['Booleans are True/False (capitalized).', 'Print variable directly.', 'No quotes around True.'],
+        tests: [{ input: '', expected: 'True', description: 'Boolean output check' }]
+      }
+    ],
+    quiz: [
+      { id: 'q1', question: 'Which is a valid Python variable name?', choices: ['2score', 'user-name', 'user_name', 'class'], answer: 2, explanation: 'Use letters/numbers/underscores and avoid keywords.' },
+      { id: 'q2', question: 'What does print() do?', choices: ['Takes user input', 'Displays output', 'Creates a variable', 'Stops program'], answer: 1, explanation: 'print() outputs text/data to console.' },
+      { id: 'q3', question: 'Which type is 3.14?', choices: ['int', 'float', 'str', 'bool'], answer: 1, explanation: 'Decimal numbers are float.' },
+      { id: 'q4', question: 'How do you write a comment?', choices: ['// comment', '# comment', '<!-- -->', '/* */'], answer: 1, explanation: '# starts single-line comments in Python.' },
+      { id: 'q5', question: 'True is what data type?', choices: ['str', 'int', 'bool', 'float'], answer: 2, explanation: 'True/False are boolean values.' }
+    ],
+    xp: 120,
+    prerequisites: []
+  },
+  {
+    id: 'decisions',
+    stage: 2,
+    title: 'Lesson 2 — Making Decisions',
+    duration: '40 min',
+    difficulty: 'Easy',
+    objective: 'Use if/elif/else with comparison and logical operators.',
+    theory: [
+      'Decision statements let your program choose different paths based on conditions.',
+      'Comparison operators include ==, !=, >, <, >=, <=.',
+      'Logical operators and/or/not combine multiple conditions.'
+    ],
+    didYouKnow: 'Indentation is syntax in Python—4 spaces is standard.',
+    pitfall: 'Using = instead of == in a condition causes errors.',
+    analogy: 'if/elif/else is like choosing lanes at a toll gate based on your vehicle type.',
+    examples: [
+      { title: 'Simple if', code: "age = 18\nif age >= 18:\n    print('Adult')", explanation: 'Condition true executes indented block.' },
+      { title: 'if/elif/else', code: "score = 82\nif score >= 90:\n    print('A')\nelif score >= 80:\n    print('B')\nelse:\n    print('C or below')", explanation: 'Checks top to bottom and runs first match.' },
+      { title: 'Logical operators', code: "username = 'sam'\nis_verified = True\nif username == 'sam' and is_verified:\n    print('Access granted')", explanation: 'and requires both conditions true.' }
+    ],
+    exercises: [
+      { id: 'ex1', prompt: 'Given temperature = 35, print Hot if above 30 else Pleasant.', starterCode: 'temperature = 35\n# TODO\n', solution: "if temperature > 30:\n    print('Hot')\nelse:\n    print('Pleasant')", hint: ['Use if/else.', 'Condition should be > 30.', 'Print exact words.'], tests: [{ input: '', expected: 'Hot', description: 'Hot branch' }] },
+      { id: 'ex2', prompt: 'Given marks = 74, print Pass if marks >= 50 and Fail otherwise.', starterCode: 'marks = 74\n# TODO\n', solution: "if marks >= 50:\n    print('Pass')\nelse:\n    print('Fail')", hint: ['Use comparison >=.', 'Two branches.', 'Case-sensitive output.'], tests: [{ input: '', expected: 'Pass', description: 'Pass branch' }] },
+      { id: 'ex3', prompt: 'Given is_member = True and has_coupon = False, print Discount only when either is true.', starterCode: 'is_member = True\nhas_coupon = False\n# TODO\n', solution: "if is_member or has_coupon:\n    print('Discount')\nelse:\n    print('No Discount')", hint: ['Use or.', 'True if any one condition true.', 'Else fallback.'], tests: [{ input: '', expected: 'Discount', description: 'Logical OR check' }] }
+    ],
+    quiz: [
+      { id: 'q1', question: 'What is the equality operator?', choices: ['=', '==', '!=', ':='], answer: 1, explanation: '== compares two values.' },
+      { id: 'q2', question: 'Which runs if previous conditions are false?', choices: ['for', 'elif', 'else', 'while'], answer: 2, explanation: 'else is fallback.' },
+      { id: 'q3', question: 'not True evaluates to?', choices: ['True', 'False', 'None', '0'], answer: 1, explanation: 'not negates boolean.' },
+      { id: 'q4', question: 'Python indentation is...', choices: ['Optional', 'Only style', 'Required syntax', 'Deprecated'], answer: 2, explanation: 'Indentation defines blocks.' },
+      { id: 'q5', question: 'x>1 and x<5 means?', choices: ['Either condition', 'Both conditions', 'Negation', 'Comparison error'], answer: 1, explanation: 'and requires both true.' }
+    ],
+    xp: 150,
+    prerequisites: ['hello-python']
+  },
+  {
+    id: 'loops',
+    stage: 2,
+    title: 'Lesson 3 — Loops & Iteration',
+    duration: '45 min',
+    difficulty: 'Medium',
+    objective: 'Master for/while loops, range(), break, and continue.',
+    theory: [
+      'Loops repeat code to avoid duplication and automate repeated actions.',
+      'for loops iterate over sequences or ranges, while loops repeat while condition is true.',
+      'Use break to stop loop early and continue to skip current iteration.'
+    ],
+    didYouKnow: 'range(start, stop, step) excludes stop.',
+    pitfall: 'For while loops, always update the loop variable to avoid infinite loops.',
+    analogy: 'A loop is like doing pushups: repeat until target count is reached.',
+    examples: [
+      { title: 'for with range', code: "for i in range(1, 4):\n    print(i)", explanation: 'Prints 1, 2, 3.' },
+      { title: 'while loop', code: "count = 3\nwhile count > 0:\n    print(count)\n    count -= 1", explanation: 'Repeats until count becomes 0.' },
+      { title: 'break/continue', code: "for n in range(1, 6):\n    if n == 2:\n        continue\n    if n == 5:\n        break\n    print(n)", explanation: 'Skips 2 and stops before 5.' }
+    ],
+    exercises: [
+      { id: 'ex1', prompt: 'Use range() to print numbers 1 to 5.', starterCode: '# TODO\n', solution: "for i in range(1, 6):\n    print(i)", hint: ['Use for i in range.', 'Stop should be 6.', 'Print each i.'], tests: [{ input: '', expected: '1\n2\n3\n4\n5', description: 'Range loop output' }] },
+      { id: 'ex2', prompt: 'Print even numbers from 2 to 10 using a loop.', starterCode: '# TODO\n', solution: "for i in range(2, 11, 2):\n    print(i)", hint: ['Use step of 2.', 'Start at 2.', 'End at 10.'], tests: [{ input: '', expected: '2\n4\n6\n8\n10', description: 'Even sequence' }] },
+      { id: 'ex3', prompt: 'Use while loop to print countdown 3,2,1.', starterCode: '# TODO\n', solution: "n = 3\nwhile n > 0:\n    print(n)\n    n -= 1", hint: ['Initialize n.', 'Condition n > 0.', 'Decrement n.'], tests: [{ input: '', expected: '3\n2\n1', description: 'Countdown output' }] }
+    ],
+    quiz: [
+      { id: 'q1', question: 'range(3) gives?', choices: ['1,2,3', '0,1,2', '0,1,2,3', '3 only'], answer: 1, explanation: 'Default starts at 0, excludes stop.' },
+      { id: 'q2', question: 'break does what?', choices: ['Skips one iteration', 'Ends loop immediately', 'Restarts loop', 'Pauses loop'], answer: 1, explanation: 'break exits the loop.' },
+      { id: 'q3', question: 'continue does what?', choices: ['Ends loop', 'Skips current iteration', 'Stops program', 'Repeats forever'], answer: 1, explanation: 'continue jumps to next iteration.' },
+      { id: 'q4', question: 'while loops run while condition is...', choices: ['False', 'True', 'None', 'String'], answer: 1, explanation: 'Condition must remain true.' },
+      { id: 'q5', question: 'Infinite loop risk is highest with...', choices: ['for range', 'while without update', 'print', 'if'], answer: 1, explanation: 'Missing updates keeps condition true forever.' }
+    ],
+    xp: 170,
+    prerequisites: ['decisions']
+  },
+  {
+    id: 'lists-dicts',
+    stage: 3,
+    title: 'Lesson 4 — Lists & Dictionaries',
+    duration: '50 min',
+    difficulty: 'Medium',
+    objective: 'Create, access, update, and iterate over lists and dictionaries.',
+    theory: [
+      'Lists are ordered, mutable collections indexed from 0.',
+      'Dictionaries store key-value pairs for fast lookups by key.',
+      'Methods like append(), pop(), get(), and items() are essential tools.'
+    ],
+    didYouKnow: 'Negative list indexes count from the end: -1 is last item.',
+    pitfall: 'Dictionary keys must be unique.',
+    analogy: 'List = numbered shelf; dictionary = labeled locker system.',
+    examples: [
+      { title: 'List basics', code: "fruits = ['apple', 'banana']\nfruits.append('mango')\nprint(fruits[0], fruits[-1])", explanation: 'Add item, access first and last elements.' },
+      { title: 'Dictionary basics', code: "user = {'name': 'Ana', 'xp': 250}\nprint(user['name'])\nuser['xp'] += 50\nprint(user)", explanation: 'Read and update values by key.' },
+      { title: 'Iterating structures', code: "scores = {'math': 88, 'science': 91}\nfor subject, mark in scores.items():\n    print(subject, mark)", explanation: 'items() returns key-value pairs for loops.' }
+    ],
+    exercises: [
+      { id: 'ex1', prompt: 'Create list nums = [1,2,3] then append 4 and print list.', starterCode: '# TODO\n', solution: 'nums = [1, 2, 3]\nnums.append(4)\nprint(nums)', hint: ['Create list literal.', 'Use append.', 'Print list object.'], tests: [{ input: '', expected: '[1, 2, 3, 4]', description: 'Append check' }] },
+      { id: 'ex2', prompt: 'Given profile dict, print value of key age.', starterCode: "profile = {'name': 'Lia', 'age': 21}\n# TODO\n", solution: "print(profile['age'])", hint: ['Use square brackets with key.', 'Key is a string.', 'Print result.'], tests: [{ input: '', expected: '21', description: 'Dictionary access' }] },
+      { id: 'ex3', prompt: 'Loop through colors list and print each color in uppercase.', starterCode: "colors = ['red', 'blue']\n# TODO\n", solution: "for c in colors:\n    print(c.upper())", hint: ['Use for loop.', 'Call upper() on each.', 'Print each line.'], tests: [{ input: '', expected: 'RED\nBLUE', description: 'Uppercase loop' }] }
+    ],
+    quiz: [
+      { id: 'q1', question: 'List index starts at?', choices: ['1', '0', '-1', 'Depends'], answer: 1, explanation: 'Python uses zero-based indexing.' },
+      { id: 'q2', question: 'Which adds item to list end?', choices: ['insert', 'append', 'extend', 'push'], answer: 1, explanation: 'append adds one item to end.' },
+      { id: 'q3', question: 'Dict values are accessed by...', choices: ['Index', 'Key', 'Method only', 'Loop only'], answer: 1, explanation: 'Use keys for lookup.' },
+      { id: 'q4', question: 'items() on dict returns...', choices: ['keys only', 'values only', 'key-value pairs', 'length'], answer: 2, explanation: 'items provides tuples (k,v).' },
+      { id: 'q5', question: 'Which is mutable?', choices: ['str', 'tuple', 'list', 'int'], answer: 2, explanation: 'Lists can be changed in place.' }
+    ],
+    xp: 180,
+    prerequisites: ['loops']
+  },
+  {
+    id: 'functions',
+    stage: 4,
+    title: 'Lesson 5 — Functions',
+    duration: '55 min',
+    difficulty: 'Medium',
+    objective: 'Define and call functions with parameters, returns, and scope rules.',
+    theory: [
+      'Functions package reusable logic, making code cleaner and easier to test.',
+      'Parameters receive input values; return sends output back to caller.',
+      'Variables inside functions are local scope unless declared global.'
+    ],
+    didYouKnow: 'You can return multiple values as a tuple from a function.',
+    pitfall: 'print() displays output, but return passes data to other code.',
+    analogy: 'A function is a mini machine: feed inputs, get outputs.',
+    examples: [
+      { title: 'Basic function', code: "def greet(name):\n    return f'Hello, {name}!'\n\nprint(greet('Nora'))", explanation: 'Define with def and call with argument.' },
+      { title: 'Default parameter', code: "def power(base, exp=2):\n    return base ** exp\n\nprint(power(3))\nprint(power(3, 3))", explanation: 'Defaults make parameters optional.' },
+      { title: 'Scope example', code: "x = 10\ndef show():\n    x = 5\n    print(x)\nshow()\nprint(x)", explanation: 'Inner x is local; outer x unchanged.' }
+    ],
+    exercises: [
+      { id: 'ex1', prompt: 'Create function add(a,b) returning their sum. Print add(2,3).', starterCode: '# TODO\n', solution: "def add(a, b):\n    return a + b\n\nprint(add(2, 3))", hint: ['Use def add(a, b):', 'Return a+b.', 'Call and print result.'], tests: [{ input: '', expected: '5', description: 'Function sum' }] },
+      { id: 'ex2', prompt: 'Write function is_even(n) returning True if number is even.', starterCode: '# TODO\n', solution: "def is_even(n):\n    return n % 2 == 0\n\nprint(is_even(4))", hint: ['Use modulo operator.', 'Compare with 0.', 'Return boolean.'], tests: [{ input: '', expected: 'True', description: 'Even check' }] },
+      { id: 'ex3', prompt: 'Create function welcome(name="Coder") and print welcome() then welcome("Zed").', starterCode: '# TODO\n', solution: "def welcome(name='Coder'):\n    return f'Welcome, {name}'\n\nprint(welcome())\nprint(welcome('Zed'))", hint: ['Use default argument.', 'Return string.', 'Call twice.'], tests: [{ input: '', expected: 'Welcome, Coder\nWelcome, Zed', description: 'Default parameter behavior' }] }
+    ],
+    quiz: [
+      { id: 'q1', question: 'Keyword to define function?', choices: ['func', 'def', 'function', 'lambda'], answer: 1, explanation: 'Functions are defined with def.' },
+      { id: 'q2', question: 'return is used to...', choices: ['Print value', 'Stop Python', 'Send value back', 'Create loop'], answer: 2, explanation: 'return outputs value to caller.' },
+      { id: 'q3', question: 'Variable inside function is usually...', choices: ['Global', 'Local', 'Constant', 'Static'], answer: 1, explanation: 'Scope is local by default.' },
+      { id: 'q4', question: 'Default parameter is used when...', choices: ['No argument provided', 'Always ignored', 'Only in loops', 'In classes only'], answer: 0, explanation: 'It fills missing argument values.' },
+      { id: 'q5', question: 'Which improves code reuse most?', choices: ['if statements', 'Functions', 'Comments', 'Variables'], answer: 1, explanation: 'Functions avoid repeated code blocks.' }
+    ],
+    xp: 200,
+    prerequisites: ['lists-dicts']
+  }
+];
 
 export const lessonMap = Object.fromEntries(lessons.map((lesson) => [lesson.id, lesson]));

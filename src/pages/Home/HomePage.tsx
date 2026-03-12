@@ -15,7 +15,7 @@ export function HomePage() {
         </div>
       </section>
       <section className="grid gap-4 md:grid-cols-3">
-        {['10,000+ learners', '358 guided lessons', '32 learning stages'].map((item) => (
+        {['10,000+ learners', '500+ coding challenges', '8 learning stages'].map((item) => (
           <div className="card text-center" key={item}>{item}</div>
         ))}
       </section>

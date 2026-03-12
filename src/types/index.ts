@@ -25,9 +25,7 @@ export interface QuizQuestion {
 
 export interface Lesson {
   id: string;
-  stageId: string;
   stage: number;
-  order: number;
   title: string;
   duration: string;
   difficulty: Difficulty;
